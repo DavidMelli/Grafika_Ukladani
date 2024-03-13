@@ -29,5 +29,20 @@ namespace Grafika_Ukladani
             board.Add(e.GetPosition(canvasBoard));
             board.Draw(canvasBoard);
         }
+
+
+
+
+        private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            File.WriteAllText("data.csv", board.ToString());
+            Console.BackgroundColor = ConsoleColor.Red;
+        }
+
+        private void ButtonClear_Click(object sender, RoutedEventArgs e)
+        {
+            board.Clear();
+            board.Draw(canvasBoard);
+        }
     }
 }
