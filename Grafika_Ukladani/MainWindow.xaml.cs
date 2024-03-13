@@ -1,12 +1,9 @@
-﻿using System.Text;
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Grafika_Ukladani
@@ -28,6 +25,24 @@ namespace Grafika_Ukladani
         {
             board.Add(e.GetPosition(canvasBoard));
             board.Draw(canvasBoard);
+        }
+        private void ButtonOpen_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    string text = File.ReadAllText(openFileDialog.FileName);
+                    board.FromString(text);
+                    board.Draw(canvasBoard);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Soubor nebyl otevřen z důvodu chyby: \r\n{ex.Message}");
+            }
         }
 
 
